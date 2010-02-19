@@ -1,33 +1,4 @@
 {% load i18n admin_tools_dashboard_tags %}
-<script type="text/javascript" charset="utf-8">
-    // load jquery if it's not loaded yet
-    if (typeof jQuery == 'undefined') {
-        var script_url = '{{ media_url }}/admin_tools/js/jquery/jquery-1.4.1.min.js';
-        document.write(unescape('%3Cscript src="' + script_url + '" type="text/javascript"%3E%3C/script%3E'));
-    }
-</script>
-<script type="text/javascript" charset="utf-8">
-    // load jquery ui if it's not loaded yet
-    if (typeof jQuery.ui == 'undefined') {
-        var script_url = '{{ media_url }}/admin_tools/js/jquery/jquery-ui-1.8rc1.custom.min.js';
-        document.write(unescape('%3Cscript src="' + script_url + '" type="text/javascript"%3E%3C/script%3E'));
-    }
-</script>
-<script type="text/javascript" charset="utf-8">
-    // load json if it's not loaded yet
-    if (typeof JSON == 'undefined') {
-        var script_url = '{{ media_url }}/admin_tools/js/json.min.js';
-        document.write(unescape('%3Cscript src="' + script_url + '" type="text/javascript"%3E%3C/script%3E'));
-    }
-</script>
-<script type="text/javascript" charset="utf-8">
-    // load jquery cookie if it's not loaded yet
-    if (typeof jQuery.cookie == 'undefined') {
-        var script_url = '{{ media_url }}/admin_tools/js/jquery/jquery.cookie.min.js';
-        document.write(unescape('%3Cscript src="' + script_url + '" type="text/javascript"%3E%3C/script%3E'));
-    }
-</script>
-<script type="text/javascript" src="{{ media_url }}/admin_tools/js/jquery/jquery.dashboard.js"></script>
 {% if dashboard.Media.js %}
 {% for js in dashboard.Media.js %}
 <script type="text/javascript" src="{{ media_url }}/{{ js }}"></script>{% endfor %}
@@ -37,31 +8,33 @@
 <h1 class="dashboard-title">{{ dashboard.title }}</h1>
 {% endif %}
 
-<script type="text/javascript">
-// <![CDATA[
-jQuery(function($) {
-    $('#{{ dashboard.get_id }}').dashboard({
-        'columns': {{ dashboard.columns }}
-    });
-});
-//]]>
-</script>
-
 <div id="dashboard-panel">
     <h3><a href="#">{% trans "Modules" %}</a></h3>
     {% if has_disabled_modules %}
     <ul>
         {% spaceless %}
         {% for module in dashboard.children %}
-        {% if not module.enabled %}
-        <li><a href="#" rel="module_{{ forloop.counter }}" class="addlink add-dashboard-module">{{ module.title }}</a></li>
-        {% endif %}
+            {% if not module.enabled %}
+                <li><a href="#" rel="module_{{ forloop.counter }}" class="addlink add-dashboard-module">{{ module.title }}</a></li>
+            {% endif %}
         {% endfor %}
         {% endspaceless %}
     </ul>
     {% endif %}
 </div>
-<div id="{{ dashboard.get_id }}" class="dashboard-container">
-    {% for module in dashboard.children %}
-{% admin_tools_render_dashboard_module module forloop.counter %}{% endfor %}
+
+<div id="content" class="content-flexible">
+    <div class="section-content">
+        <div class="container-flexible">
+            <h1>Administration</h1>
+                {% for column in dashboard.children %}
+                    <div class="column {{ column.className }}">
+                        {% for module in column.children %}
+                            {% admin_tools_render_dashboard_module module forloop.counter %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>

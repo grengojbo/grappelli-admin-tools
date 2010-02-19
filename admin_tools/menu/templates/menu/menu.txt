@@ -18,11 +18,11 @@ class CustomMenu(Menu):
         ))
         self.children.append(AppListMenuItem(
             title=_('Applications'),
-            exclude_list=('django.contrib',)
+            models=('add.your.app.models.here',)
         ))
         self.children.append(AppListMenuItem(
             title=_('Administration'),
-            include_list=('django.contrib',)
+            models=('django.contrib',)
         ))
 
     def init_with_context(self, context):

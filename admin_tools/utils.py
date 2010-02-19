@@ -13,26 +13,32 @@ class AppListElementMixin(object):
     """
     def _check_perms(self, request, model, model_admin):
         mod = '%s.%s' % (model.__module__, model.__name__)
-
-        # check that the app is not in the exclude list
-        for pattern in self.exclude_list:
-            if mod.startswith(pattern):
-                return False
-
-        # check that the app is in the app list (if not empty)
-        if len(self.include_list):
-            found = False
-            for pattern in self.include_list:
-                if mod.startswith(pattern):
-                    found = True
-            if not found:
-                return False
-
+        
+        if type(self).__name__ == 'ModelListDashboardModule':
+            if len(self.models):
+                found = False
+                for pattern in self.models:
+                    if mod.startswith(pattern):
+                        found = True
+                if not found:
+                    return False
+        
+        elif type(self).__name__ == 'AppListDashboardModule':
+            print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+            if len(self.apps):
+                found = False
+                for pattern in self.apps:
+                    if mod.startswith(pattern):
+                        found = True
+                if not found:
+                    return False
+        
         # check that the user has module perms
         if not request.user.has_module_perms(model._meta.app_label):
             return False
 
         # check whether user has any perm for this module
+        print model_admin
         perms = model_admin.get_model_perms(request)
         if True not in perms.values():
             return False

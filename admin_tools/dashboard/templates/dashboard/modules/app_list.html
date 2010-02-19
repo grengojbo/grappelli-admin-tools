@@ -1,7 +1,7 @@
 {% extends "dashboard/module.html" %}
 {% load i18n %}
 {% block module_content %}
-        {% for child in module.children %}
+    {% for child in module.children %}
         <h3><a href="{{ child.url }}">{{ child.title }}</a></h3>
         <ul>
             {% for model in child.models %}
@@ -18,5 +18,5 @@
             {% endspaceless %}
             {% endfor %}
         </ul>
-        {% endfor %}
+    {% endfor %}
 {% endblock %}

@@ -55,13 +55,13 @@ class Dashboard(object):
                 # append an app list module for "Applications"
                 self.children.append(AppListDashboardModule(
                     title=_('Applications'),
-                    exclude_list=('django.contrib',),
+                    apps=('django.contrib',),
                 ))
         
                 # append an app list module for "Administration"
                 self.children.append(AppListDashboardModule(
                     title=_('Administration'),
-                    include_list=('django.contrib',),
+                    apps=('django.contrib',),
                 ))
         
                 # append a recent actions module
@@ -413,12 +413,7 @@ class AppListDashboardModule(DashboardModule, AppListElementMixin):
     As well as the ``DashboardModule`` properties, the
     ``AppListDashboardModule`` has two extra properties:
 
-    ``exclude_list``
-        A list of apps to exclude, if an app name (e.g. "django.contrib.auth"
-        starts with an element of this list (e.g. "django.contrib") it won't
-        appear in the dashboard module.
-
-    ``include_list``
+    ``apps``
         A list of apps to include, only apps whose name (e.g. 
         "django.contrib.auth") starts with one of the strings (e.g. 
         "django.contrib") in the list will appear in the dashboard module.
@@ -460,14 +455,14 @@ class AppListDashboardModule(DashboardModule, AppListElementMixin):
         self.title = kwargs.get('title', _('Applications'))
         self.template = kwargs.get('template',
                                    'dashboard/modules/app_list.html')
-        self.include_list = kwargs.get('include_list', [])
-        self.exclude_list = kwargs.get('exclude_list', [])
+        self.apps = kwargs.get('apps', [])
 
     def init_with_context(self, context):
         request = context['request']
         apps = {}
         for model, model_admin in admin.site._registry.items():
             perms = self._check_perms(request, model, model_admin)
+            print perms
             if not perms or ('add' not in perms and 'change' not in perms):
                 continue
             app_label = model._meta.app_label
@@ -499,15 +494,8 @@ class ModelListDashboardModule(DashboardModule, AppListElementMixin):
     As well as the ``DashboardModule`` properties, the
     ``ModelListDashboardModule`` takes two extra keyword arguments:
 
-    ``include_list``
-        A list of models to include, only models whose name (e.g. 
-        "blog.comments.Comment") starts with one of the strings (e.g. "blog") 
-        in the include list will appear in the dashboard module.
-
-    ``exclude_list``
-        A list of models to exclude, if a model name (e.g. 
-        "blog.comments.Comment" starts with an element of this list (e.g. 
-        "blog.comments") it won't appear in the dashboard module.
+    ``list``
+        A list of models. these models will appear in the dashboard module.
 
     Here's a small example of building a model list module::
         
@@ -520,7 +508,10 @@ class ModelListDashboardModule(DashboardModule, AppListElementMixin):
                 # will only list the django.contrib.auth models
                 self.children.append(ModelListDashboardModule(
                     title='Authentication',
-                    include_list=('django.contrib.auth',)
+                    list=(
+                        'django.contrib.auth.User',
+                        'django.contrib.auth.Group',
+                    )
                 ))
 
     The screenshot of what this code produces:
@@ -539,12 +530,25 @@ class ModelListDashboardModule(DashboardModule, AppListElementMixin):
         self.title = kwargs.get('title', '')
         self.template = kwargs.get('template',
                                    'dashboard/modules/model_list.html')
-        self.include_list = kwargs.get('include_list', [])
-        self.exclude_list = kwargs.get('exclude_list', [])
-
+        self.models = kwargs.get('models', [])
+    
     def init_with_context(self, context):
         request = context['request']
-        for model, model_admin in admin.site._registry.items():
+        for model_name in self.models:
+            # get Model and ModelAdmin
+            try:
+                mod, inst = model_name.rsplit('.', 1)
+                mod = import_module(mod)
+            except:
+                from django.core.exceptions import ImproperlyConfigured
+                raise ImproperlyConfigured((
+                    'ModelListDashboardModule %s seems to be ImproperlyConfigured. '
+                    'Can not import module: %s' % (self.title, mod)
+                ))
+            
+            model = getattr(mod, inst)
+            model_admin = admin.site._registry.get(model)
+            
             perms = self._check_perms(request, model, model_admin)
             if not perms:
                 continue
@@ -556,9 +560,32 @@ class ModelListDashboardModule(DashboardModule, AppListElementMixin):
                 model_dict['add_url'] = self._get_admin_add_url(model)
             self.children.append(model_dict)
 
-        # sort model list alphabetically
-        self.children.sort(lambda x, y: cmp(x['title'], y['title']))
+            
+class DashboardModuleGroup(DashboardModule):
+    
+    def __init__(self, **kwargs):
+        super(DashboardModuleGroup, self).__init__(**kwargs)
+        self.title = kwargs.get('title', '')
+        self.template = kwargs.get('template',
+                                   'dashboard/modules/module_group.html')
+        self.list = kwargs.get('list', [])
+        self.display = kwargs.get('display', 'tabs')
+        
+    def init_with_context(self, context):
+        for module in self.list:
+            module.init_with_context(context)
+        
+        self.children = self.list
 
+class DashboardModuleColumn(DashboardModule):
+    
+    def __init__(self, **kwargs):
+        super(DashboardModuleColumn, self).__init__(**kwargs)
+        self.title = kwargs.get('title', '')
+        self.template = kwargs.get('template',
+                                   'dashboard/modules/column.html')
+        self.children = kwargs.get('children', [])
+        self.className = kwargs.get('className', [])
 
 class RecentActionsDashboardModule(DashboardModule):
     """
@@ -603,8 +630,7 @@ class RecentActionsDashboardModule(DashboardModule):
         self.title = kwargs.get('title', _('Recent Actions'))
         self.template = kwargs.get('template',
                                    'dashboard/modules/recent_actions.html')
-        self.include_list = kwargs.get('include_list', [])
-        self.exclude_list = kwargs.get('exclude_list', [])
+        self.models = kwargs.get('models', [])
         self.limit = kwargs.get('limit', 10)
 
     def init_with_context(self, context):
@@ -760,16 +786,10 @@ class DefaultIndexDashboard(Dashboard):
             ]
         ))
 
-        # append an app list module for "Applications"
-        self.children.append(AppListDashboardModule(
-            title=_('Applications'),
-            exclude_list=('django.contrib',),
-        ))
-
         # append an app list module for "Administration"
         self.children.append(AppListDashboardModule(
             title=_('Administration'),
-            include_list=('django.contrib',),
+            apps=('django.contrib',),
         ))
 
         # append a recent actions module
@@ -828,7 +848,7 @@ class DefaultAppIndexDashboard(AppIndexDashboard):
         # append a model list module
         self.children.append(ModelListDashboardModule(
             title=self.app_title,
-            include_list=self.models,
+            models=self.models,
         ))
 
         # append a recent actions module

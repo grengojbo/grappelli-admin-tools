@@ -1,0 +1,648 @@
+
+
+
+/* Basic Settings, Fieldsets, Form-Rows
+------------------------------------------------------------------------------------------------------ */
+
+form {
+    margin: 0; padding: 0;
+}
+
+fieldset {
+    margin: 0; padding: 0;
+}
+
+.form-row p.help {
+    margin: 3px 0 2px 161px; padding: 0;
+}
+
+/*.form-row input + p.help, 
+.form-row select + p.help, 
+.form-row textarea + p.help {
+    margin-top: 3px;
+}*/
+.form-row ul.radio-list + p.help, 
+.form-row ul.checkbox-list + p.help {
+    margin-top: -3px;
+}
+.form-row input[type=checkbox] + label + p.help {
+/*    margin-top: -5px;*/
+    margin-left: 161px;
+}
+
+
+
+
+/* Labels & Other Typographic Elements in Forms
+------------------------------------------------------------------------------------------------------ */
+
+label {
+    margin: 5px 0 -5px;
+    width: 140px;
+    color: #444; font-size: 11px; line-height: 15px;
+/*    text-align: right;*/
+    cursor: pointer;
+/*    background: #e4f;*/
+}
+.required label, label.required, 
+.row .required label, .row label.required {
+    font-weight: bold;
+}
+
+.module label {
+    display: block; float: left;
+    margin-right: 20px;
+    padding: 0 0 6px;
+    width: 140px;
+}
+.module .vCheckboxLabel {
+    display: inline; float: none; clear: both;
+    margin: 0 0 0 10px; padding: 0;
+}
+
+/*.form-cell + .form-cell {
+    padding-left: 10px !important;
+    margin-left: -10px !important;
+}*/
+
+
+
+/* Form Fields
+------------------------------------------------------------------------------------------------------ */
+
+input, textarea, select, button {
+    margin: 0;
+    vertical-align: middle;
+    color: #666; font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;
+    border: 1px solid #bbb;
+    border-color: #ccc #ddd #ddd #ccc;
+    border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
+    box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+    outline: none;
+}
+input, textarea, select {
+    box-shadow: 0 1px 3px #eaeaea inset; -moz-box-shadow: 0 1px 3px #eaeaea inset; -webkit-box-shadow: 0 1px 3px #eaeaea inset;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #999 #bbb #bbb #999;
+}
+
+
+/*  Text, Password ................................................... */
+
+input[type=text], input[type=password] {
+    padding: 5px 5px 4px;
+    height: 25px;
+}
+/*  Webkit browser hack: apply same horizontal padding as in moz browsers
+    Moz Browsers have a default horizontal padding of 3px in input[type=submit] */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type=text], input[type=password] {
+/*        padding-top: 19px;*/
+/*        padding: 19px 5px -5px !important;*/
+/*        height: 19px;*/
+/*        line-height: 25px !important;*/
+        line-height: 13px !important;
+    }
+}
+
+
+/*  File ................................................... */
+
+input[type=file] {
+    position: relative;
+    top: 1px;
+    height: auto;
+    border: none;
+}
+.table-cell input[type=file] {
+    top: 3px;
+    margin-bottom: -3px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .table-cell input[type=file] {
+        top: 2px;
+        margin-bottom: -2px;
+    }
+}
+
+
+
+/*  Date & Time ................................................... */
+
+.vDateField, .vTimeField {
+    margin-left: 0;
+}
+p.datetime input.vTimeField {
+    margin-left: 13px;
+}
+
+
+/*  Textarea ................................................... */
+
+textarea {
+    vertical-align: top;
+    padding: 3px 5px;
+}
+fieldset.monospace textarea {
+    font-family: "Bitstream Vera Sans Mono",Monaco,"Courier New",Courier,monospace;
+}
+
+
+/*  Select ................................................... */
+
+select {
+    padding: 4px 3px 4px 3px;
+    height: 25px;
+}
+select[multiple=multiple] {
+    padding-right: 5px;
+    height: 160px;
+}
+option {
+    padding-right: 30px;
+    border-bottom: 1px dotted #ddd;
+}
+option:last-child {
+    border-bottom: none;
+}
+
+
+/*  Checkbox, Radio ................................................... */
+
+input[type=checkbox], input[type=radio] {
+    position: relative;
+    margin: 0;
+}
+.form-row input[type=checkbox], .form-row input[type=radio] {
+    margin-left: 160px;
+    margin-right: 5px;
+}
+.table-cell>input[type=radio], 
+.table-cell>input[type=checkbox] {
+    top: 2px;
+    margin-bottom: -3px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .table-cell>input[type=radio] {
+        top: 2px;
+        margin-bottom: -2px;
+    }
+    .table-cell>input[type=checkbox] {
+        top: 3px;
+        margin-bottom: -2px;
+    }
+}
+.form-row input[type=radio], 
+.form-row input[type=checkbox], 
+.table-cell ul.radiolist input[type=radio], 
+.table-cell ul.checkboxlist input[type=checkbox] {
+    top: -1px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .form-row input[type=radio], 
+    .table-cell ul.radiolist input[type=radio] {
+        top: -2px;
+    }
+    .form-row input[type=checkbox], 
+    .table-cell ul.radiolist input[type=checkbox] {
+        top: 0;
+    }
+}
+.table-cell input[type=radio], 
+.table-cell input[type=checkbox], 
+ul.radiolist input[type=radio], 
+ul.checkboxlist input[type=checkbox] {
+    margin-left: 0;
+    margin-right: 5px;
+}
+
+
+/*.table-cell input[type=radio] {
+    top: -2px;
+}*/
+.form-row input[type=checkbox] + label {
+    position: relative; float: none;
+    top: 0;
+    display: inline-block;
+    margin-bottom: -2px;
+}
+
+.form-row ul.checkboxlist input[type=checkbox] {
+    top: 0;
+    margin: 0 5px 0 0;
+}
+.form-row ul.checkboxlist label input[type=checkbox] {
+    top: -2px;
+    vertical-align: bottom;
+}
+
+.form-row label + input + p.help input[type=checkbox] {
+    position: relative; top: -2px; margin: 0 3px 0 0;
+}
+
+
+/*  Radiolists & Checkboxlists ................................................... */
+
+ul.radiolist, ul.checkboxlist {
+    position: relative; float: none; display: inline-block;
+    margin: 5px 0 5px 160px; padding: 0;
+    font-size: 11px; line-height: 15px; font-weight: normal;
+}
+label + ul.radiolist, label + ul.checkboxlist, 
+.table-cell ul.radiolist, .table-cell ul.checkboxlist {
+    margin-left: 0;
+}
+
+ul.radiolist li + li, ul.checkboxlist li + li {
+    margin-top: 2px;
+}
+
+ul.inline li {
+    float: left;
+    white-space: nowrap;
+    margin-top: 0 !important;
+    padding-right: 20px;
+}
+ul.radiolist label, ul.checkboxlist label {
+    float: none; display: inline-block;
+    margin: 0; padding: 0;
+    width: auto !important;
+}
+
+
+/*  Autocomplete Fields ................................................... */
+
+.vAutocompleteSearchField, 
+.vM2MAutocompleteSearchField {
+    background: #eaf5f8;
+}
+
+input.vAutocompleteRawIdAdminField, 
+input.vM2MAutocompleteRawIdAdminField {
+    /*margin: 0 !important; padding: 0;
+    width: 0 !important; height: 0;
+    border: none;
+    outline: none;
+    background: transparent;*/
+}
+
+
+/*  Changelist Form Fields ................................................... */
+
+#changelist form table input[type=text], 
+#changelist form table input[type=password], 
+#changelist form table input[type=file], 
+#changelist form table select, 
+#changelist form table textarea {
+    position: relative;
+    top: -5px;
+    margin-bottom: -9px;
+    vertical-align: top;
+}
+
+#changelist form table input[type=radio], 
+#changelist form table input[type=checkbox] {
+    position: relative; top: -1px;
+}
+#changelist form table thead input[type=radio], 
+#changelist form table thead input[type=checkbox] {
+    top: 0;
+}
+
+
+
+/*  Facelist
+------------------------------------------------------------------------------------------------------ */
+
+span.ui-gFacelist-message {
+    display: inline-block;
+    height: 25px;
+    background: #fff;
+    margin: 0;
+    padding: 3px 5px 4px;
+    vertical-align: middle;
+    color: #666; font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;
+    border: 1px solid #bbb;
+    border-color: #ccc #ddd #ddd #ccc;
+    border-top-left-radius: 3px; -moz-border-radius-topleft: 3px; -webkit-border-top-left-radius: 3px;
+    border-top-right-radius: 3px; -moz-border-radius-topright: 3px; -webkit-border-top-right-radius: 3px;
+    box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+    outline: none;
+}
+
+.ui-gFacelist-toolbar button {
+    border-bottom-right-radius: 0; -moz-border-radius-bottomright: 0; -webkit-border-bottom-right-radius: 0;
+}
+
+ul.ui-gFacelist-facelist {
+    position: relative; float: left; clear: both;
+    padding: 0px 5px 5px;
+    border: 1px solid #bbb;
+    border-color: #ccc #ddd #ddd #ccc;
+    border-top: none;
+    border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; -webkit-border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; -webkit-border-bottom-right-radius: 5px;
+    box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+    background: #fff;
+    
+}
+li.ui-gFacelist-item {
+    position: relative; float: left;
+    margin-top: 5px; padding: 3px 6px 2px;
+    width: auto;
+    font-weight: bold;
+    border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
+    background: #ddd;
+}
+li.ui-gFacelist-item {
+    margin-right: 5px;
+}
+ul.ui-gFacelist-facelist input.ui-gAutocomplete-autocomplete {
+    margin-top: 4px;
+    width: 100px;
+    
+}
+
+
+
+/* Form Elements Widths & Heights
+------------------------------------------------------------------------------------------------------ */
+
+input[type=text], input[type=password], 
+input.vDateField, input.vTimeField, 
+.change-list form table .vAutocompleteSearchField, 
+.change-list form table .vM2MAutocompleteSearchField, 
+.inline-tabular .vAutocompleteSearchField, 
+.inline-tabular .vM2MAutocompleteSearchField {
+    width: 118px;
+}
+select {
+/*    min-width: 118px;*/
+}
+
+input.vTextField, input.vURLField, input.vFileBrowseField, textarea, 
+.vLargeTextField, .vXMLLargeTextField, 
+.change-form .vAutocompleteSearchField, 
+.change-form .vM2MAutocompleteSearchField {
+    width: 758px;
+}
+
+input.vForeignKeyRawIdAdminField, input.vIntegerField, input.vPositiveSmallIntegerField, 
+input.vManyToManyRawIdAdminField, 
+.inline-tabular input[type=text], .inline-tabular textarea {
+    width: 118px;
+}
+
+.inline-tabular input.vTextField, 
+.inline-tabular textarea.vLargeTextField, 
+.inline-tabular input.vFileBrowseField {
+    width: 238px;
+}
+.inline-tabular textarea.vLargeTextField {
+    height: 118px;
+}
+.changelist-results select {
+    max-width: 238px;
+}
+
+
+
+/* Form Fields in Grid
+------------------------------------------------------------------------------------------------------ */
+
+input[class*="span"], select[class*="span"], textarea[class*="span"] {
+    margin-right: 0;
+}
+
+.span-24 input[type=text], .span-24 input[type=password], 
+.span-24 select, .span-24 textarea, 
+input[type=text].span-24, input[type=password].span-24, 
+select.span-24, textarea.span-24, 
+.span-24 .ui-gFacelist-message, 
+.span-24 .ui-gFacelist-facelist {
+    width: 918px;
+}
+.span-23 input[type=text], .span-23 input[type=password], 
+.span-23 select, .span-23 textarea, 
+input[type=text].span-23, input[type=password].span-23, 
+select.span-23, textarea.span-23, 
+.span-23 .ui-gFacelist-message, 
+.span-23 .ui-gFacelist-facelist {
+    width: 878px;
+}
+.span-22 input[type=text], .span-22 input[type=password], 
+.span-22 select, .span-22 textarea, 
+input[type=text].span-22, input[type=password].span-22, 
+select.span-22, textarea.span-22, 
+.span-22 .ui-gFacelist-message, 
+.span-22 .ui-gFacelist-facelist {
+    width: 838px;
+}
+.span-21 input[type=text], .span-21 input[type=password], 
+.span-21 select, .span-21 textarea, 
+input[type=text].span-21, input[type=password].span-21, 
+select.span-21, textarea.span-21, 
+.span-21 .ui-gFacelist-message, 
+.span-21 .ui-gFacelist-facelist {
+    width: 798px;
+}
+.span-20 input[type=text], .span-20 input[type=password], 
+.span-20 select, .span-20 textarea, 
+input[type=text].span-20, input[type=password].span-20, 
+select.span-20, textarea.span-20, 
+.span-20 .ui-gFacelist-message, 
+.span-20 .ui-gFacelist-facelist {
+    width: 758px;
+}
+.span-19 input[type=text], .span-19 input[type=password], 
+.span-19 select, .span-19 textarea, 
+input[type=text].span-19, input[type=password].span-19, 
+select.span-19, textarea.span-19, 
+.span-19 .ui-gFacelist-message, 
+.span-19 .ui-gFacelist-facelist {
+    width: 718px;
+}
+.span-18 input[type=text], .span-18 input[type=password], 
+.span-18 select, .span-18 textarea, 
+input[type=text].span-18, input[type=password].span-18, 
+select.span-18, textarea.span-18, 
+.span-18 .ui-gFacelist-message, 
+.span-18 .ui-gFacelist-facelist {
+    width: 678px;
+}
+.span-17 input[type=text], .span-17 input[type=password], 
+.span-17 select, .span-17 textarea, 
+input[type=text].span-17, input[type=password].span-17, 
+select.span-17, textarea.span-17, 
+.span-17 .ui-gFacelist-message, 
+.span-17 .ui-gFacelist-facelist {
+    width: 638px;
+}
+.span-16 input[type=text], .span-16 input[type=password], 
+.span-16 select, .span-16 textarea, 
+input[type=text].span-16, input[type=password].span-16, 
+select.span-16, textarea.span-16, 
+.span-16 .ui-gFacelist-message, 
+.span-16 .ui-gFacelist-facelist, 
+.span-24 input.vForeignKeyRawIdAdminField, 
+.span-24 input.vManyToManyRawIdAdminField {
+    width: 598px;
+}
+.span-15 input[type=text], .span-15 input[type=password], 
+.span-15 select, .span-15 textarea, 
+input[type=text].span-15, input[type=password].span-15, 
+select.span-15, textarea.span-15, 
+.span-15 .ui-gFacelist-message, 
+.span-15 .ui-gFacelist-facelist, 
+.span-23 input.vForeignKeyRawIdAdminField, 
+.span-23 input.vManyToManyRawIdAdminField {
+    width: 558px;
+}
+.span-14 input[type=text], .span-14 input[type=password], 
+.span-14 select, .span-14 textarea, 
+input[type=text].span-14, input[type=password].span-14, 
+select.span-14, textarea.span-14, 
+.span-14 .ui-gFacelist-message, 
+.span-14 .ui-gFacelist-facelist, 
+.span-22 input.vForeignKeyRawIdAdminField, 
+.span-22 input.vManyToManyRawIdAdminField {
+    width: 518px;
+}
+.span-13 input[type=text], .span-13 input[type=password], 
+.span-13 select, .span-13 textarea, 
+input[type=text].span-13, input[type=password].span-13, 
+select.span-13, textarea.span-13, 
+.span-13 .ui-gFacelist-message, 
+.span-13 .ui-gFacelist-facelist, 
+.span-21 input.vForeignKeyRawIdAdminField, 
+.span-21 input.vManyToManyRawIdAdminField {
+    width: 478px;
+}
+.span-12 input[type=text], .span-12 input[type=password], 
+.span-12 select, .span-12 textarea, 
+input[type=text].span-12, input[type=password].span-12, 
+select.span-12, textarea.span-12, 
+.span-12 .ui-gFacelist-message, 
+.span-12 .ui-gFacelist-facelist, 
+.span-20 input.vForeignKeyRawIdAdminField, 
+.span-20 input.vManyToManyRawIdAdminField {
+    width: 438px;
+}
+.span-11 input[type=text], .span-11 input[type=password], 
+.span-11 select, .span-11 textarea, 
+input[type=text].span-11, input[type=password].span-11, 
+select.span-11, textarea.span-11, 
+.span-11 .ui-gFacelist-message, 
+.span-11 .ui-gFacelist-facelist, 
+.span-19 input.vForeignKeyRawIdAdminField, 
+.span-19 input.vManyToManyRawIdAdminField {
+    width: 398px;
+}
+.span-10 input[type=text], .span-10 input[type=password], 
+.span-10 select, .span-10 textarea, 
+input[type=text].span-10, input[type=password].span-10, 
+select.span-10, textarea.span-10, 
+.span-10 .ui-gFacelist-message, 
+.span-10 .ui-gFacelist-facelist, 
+.span-18 input.vForeignKeyRawIdAdminField, 
+.span-18 input.vManyToManyRawIdAdminField {
+    width: 358px;
+}
+.span-9 input[type=text], .span-9 input[type=password], 
+.span-9 select, .span-9 textarea, 
+input[type=text].span-9, input[type=password].span-9, 
+select.span-9, textarea.span-9, 
+.span-9 .ui-gFacelist-message, 
+.span-9 .ui-gFacelist-facelist, 
+.span-17 input.vForeignKeyRawIdAdminField, 
+.span-17 input.vManyToManyRawIdAdminField {
+    width: 318px;
+}
+.span-8 input[type=text], .span-8 input[type=password], 
+.span-8 select, .span-8 textarea, 
+input[type=text].span-8, input[type=password].span-8, 
+select.span-8, textarea.span-8, 
+.span-8 .ui-gFacelist-message, 
+.span-8 .ui-gFacelist-facelist, 
+.span-16 input.vForeignKeyRawIdAdminField, 
+.span-16 input.vManyToManyRawIdAdminField, 
+
+.form-cell.span-12 label + input[type=text], .form-cell.span-12 label + input[type=password], 
+.form-cell.span-12 label + select, .form-cell.span-12 label + textarea {
+    width: 278px;
+}
+.span-7 input[type=text], .span-7 input[type=password], 
+.span-7 select, .span-7 textarea, 
+input[type=text].span-7, input[type=password].span-7, 
+select.span-7, textarea.span-7, 
+.span-15 input.vForeignKeyRawIdAdminField, 
+.span-15 input.vManyToManyRawIdAdminField {
+    width: 238px;
+}
+.span-6 input[type=text], .span-6 input[type=password], 
+.span-6 select, .span-6 textarea, 
+input[type=text].span-6, input[type=password].span-6, 
+select.span-6, textarea.span-6, 
+.span-14 input.vForeignKeyRawIdAdminField, 
+.span-14 input.vManyToManyRawIdAdminField {
+    width: 198px;
+}
+.span-5 input[type=text], .span-5 input[type=password], 
+.span-5 select, .span-5 textarea, 
+input[type=text].span-5, input[type=password].span-5, 
+select.span-5, textarea.span-5, 
+.span-13 input.vForeignKeyRawIdAdminField, 
+.span-13 input.vManyToManyRawIdAdminField {
+    width: 158px;
+}
+.span-4 input[type=text], .span-4 input[type=password], 
+.span-4 select, .span-4 textarea, 
+input[type=text].span-4, input[type=password].span-4, 
+select.span-4, textarea.span-4, 
+.span-12 input.vForeignKeyRawIdAdminField, 
+.span-12 input.vManyToManyRawIdAdminField, 
+
+.form-cell.span-8 label + input[type=text], .form-cell.span-8 label + input[type=password], 
+.form-cell.span-8 label + select, .form-cell.span-8 label + textarea  {
+    width: 118px;
+}
+.span-3 input[type=text], .span-3 input[type=password], 
+.span-3 select, .span-3 textarea, 
+input[type=text].span-3, input[type=password].span-3, 
+select.span-3, textarea.span-3, 
+.span-11 input.vForeignKeyRawIdAdminField, 
+.span-11 input.vManyToManyRawIdAdminField {
+    width: 78px;
+}
+.span-2 input[type=text], .span-2 input[type=password], 
+.span-2 select, .span-2 textarea, 
+input[type=text].span-2, input[type=password].span-2, 
+select.span-2, textarea.span-2, 
+.span-10 input.vForeignKeyRawIdAdminField, 
+.span-10 input.vManyToManyRawIdAdminField {
+    width: 38px;
+}
+
+
+
+/* Input Fields in Tabular Modules
+------------------------------------------------------------------------------------------------------ */
+
+.table-cell input, .table-cell select, .table-cell textarea {
+/*    width: auto !important;*/
+}
+
+.table-cell .vTextField {
+    width: 118px;
+}
+.table-cell .vURLField, 
+.table-cell .vFileBrowseField {
+    width: 278px;
+}
+
+
+
+
+

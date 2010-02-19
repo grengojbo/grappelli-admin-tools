@@ -221,7 +221,7 @@ class AppListMenuItem(MenuItem, AppListElementMixin):
                 super(MyMenu, self).__init__(**kwargs)
                 self.children.append(AppListMenuItem(
                     title='Applications',
-                    exclude_list=('django.contrib',)
+                    apps=('django.contrib',)
                 )
 
     The screenshot of what this code produces:
@@ -241,8 +241,7 @@ class AppListMenuItem(MenuItem, AppListElementMixin):
         ``AppListMenuItem`` constructor.
         """
         super(AppListMenuItem, self).__init__(**kwargs)
-        self.include_list = kwargs.get('include_list', [])
-        self.exclude_list = kwargs.get('exclude_list', [])
+        self.apps = kwargs.get('apps', [])
 
     def init_with_context(self, context):
         """
@@ -333,10 +332,6 @@ class DefaultMenu(Menu):
         ))
         self.children.append(BookmarkMenuItem())
         self.children.append(AppListMenuItem(
-            title=_('Applications'),
-            exclude_list=('django.contrib',)
-        ))
-        self.children.append(AppListMenuItem(
             title=_('Administration'),
-            include_list=('django.contrib',)
+            models=('django.contrib',)
         ))

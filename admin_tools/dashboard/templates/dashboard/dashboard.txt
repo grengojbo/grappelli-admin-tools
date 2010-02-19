@@ -37,16 +37,10 @@ class CustomIndexDashboard(Dashboard):
             ]
         ))
 
-        # append an app list module for "Applications"
-        self.children.append(AppListDashboardModule(
-            title=_('Applications'),
-            exclude_list=('django.contrib',),
-        ))
-
         # append an app list module for "Administration"
         self.children.append(AppListDashboardModule(
             title=_('Administration'),
-            include_list=('django.contrib',),
+            apps=('django.contrib',),
         ))
 
         # append a recent actions module
@@ -108,7 +102,7 @@ class CustomAppIndexDashboard(AppIndexDashboard):
         # append a model list module
         self.children.append(ModelListDashboardModule(
             title=self.app_title,
-            include_list=self.models,
+            models=self.models,
         ))
 
         # append a recent actions module

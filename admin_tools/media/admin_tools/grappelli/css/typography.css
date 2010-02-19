@@ -1,0 +1,354 @@
+
+/*  typography.css: 
+    2009 / vonautomatisch werkstaetten / vonautomatisch.at
+------------------------------------------------------------------------------------------------------ */
+
+
+
+/* 	Headings
+------------------------------------------------------------------------------------------------------ */
+
+h1 {
+    position: relative; z-index: 800;
+    margin: 26px 0 10px;
+/*    padding: 30px 10px 10px;*/
+    font-size: 16px; line-height: 20px;
+/*    border-bottom: 1px solid #e4f;*/
+/*    border: 2px solid #ddd;
+    border-radius: 7px; -moz-border-radius: 7px; -webkit-border-radius: 7px;
+    box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+*/
+}
+.pretitle + h1 {
+    margin-top: 0;
+}
+
+h1, h2, h3, h4 {
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 13px;
+}
+h3 {
+    font-size: 12px;
+}
+h4, h5 {
+    font-size: 11px;
+}
+
+
+
+/* 	Praragraphs
+------------------------------------------------------------------------------------------------------ */
+
+p.help {
+    padding: 5px 0;
+    color: #999;
+    font-size: 10px !important; line-height: 12px;
+}
+
+.fb_show + p.help a {
+    display: inline-block;
+    padding: 3px;
+    font-size: 0; line-height: 0;
+    border: 1px solid #309bbf;
+    border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
+}
+.fb_show + p.help a:link, .fb_show + p.help a:visited {
+    border: 1px solid #309bbf;
+}
+.fb_show + p.help a:hover, .fb_show + p.help a:active {
+    border: 1px solid #444;
+}
+.fb_show + p.help a img {
+    margin: 0;
+    font-size: 0; line-height: 0;
+}
+
+
+
+/* 	Links
+------------------------------------------------------------------------------------------------------ */
+
+a { text-decoration: none; outline: none !important; }
+a:link, a:visited { color: #309bbf; }
+a:hover, a:active, a.selected { color: #444; }
+
+a.back { font-weight: bold; }
+
+/*  Listings
+------------------------------------------------------------------------------------------------------ */
+
+ul {
+/*    position: relative; float: left; clear: both;*/
+    list-style-type: none;
+}
+ul li {
+/*    position: relative; float: left;*/
+}
+
+
+
+
+/*  Iconic Links
+------------------------------------------------------------------------------------------------------ */
+
+a.addlink, a.changelink, a.deletelink,
+a.add-another, a.related-lookup, 
+a.fb_show {
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+
+/*  Hide Images in Templates ........................................... */
+
+a.add-another img, a.related-lookup img { opacity: 0; }
+a.related-lookup img { display: none; }
+
+
+/*  Add, Change, Delete, Add-Another ........................................... */
+
+a.addlink, a.changelink, a.deletelink {
+    position: relative; top: 0;
+    margin: 0 0 -1px 10px; padding: 1px 0 0 14px;
+    background-position: 0 50%;
+}
+a.addlink:link, a.addlink:visited {
+    background-image: url('../img/icons/icon-addlink.png');
+}
+a.addlink:hover, a.addlink:active {
+    background-image: url('../img/icons/icon-addlink-hover.png');
+}
+a.changelink:link, a.changelink:visited {
+    background-image: url('../img/icons/icon-changelink.png');
+}
+a.changelink:hover, a.changelink:active {
+    background-image: url('../img/icons/icon-changelink-hover.png');
+}
+
+a.deletelink { margin: 0; }
+
+
+
+
+
+
+
+/*  Filebrowser ........................................... */
+
+a.fb_show img {
+    width: 0; height: 0;
+    opacity: 0;
+}
+/*a.fb_show {
+    background-position: 2px 3px;
+}
+a.fb_show:link, a.fb_show:visited {
+    position: relative;
+    margin-left: 3px; padding: 7px 14px;
+    line-height: 0 !important;
+    border: none;
+    background-image: url('../img/icons/icon-fb-show.png');
+}
+a.fb_show:hover, a.fb_show:active {
+    background-image: url('../img/icons/icon-fb-show-hover.png');
+}*/
+
+
+
+
+
+/*a.related-lookup, 
+a.fb_show, 
+input.vDateField + span a, 
+input.vTimeField + span a {
+    background-color: #e4f !important;
+}*/
+
+
+
+/*  Blockquote, Pre, Code
+------------------------------------------------------------------------------------------------------ */
+
+blockquote {
+    margin-left: 2px; padding-left: 4px;
+    color: #777; font-size: 11px;
+    border-left: 5px solid #ddd;
+}
+
+code, pre {
+    color: #666; font-size: 11px; font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+    background: inherit;
+}
+
+pre.literal-block {
+    margin: 10px; padding: 6px 8px;
+    background: #eee;
+}
+
+code strong { color: #930; }
+
+hr {
+    clear: both;
+    margin: 0; padding: 0;
+    height: 1px;
+    color: #eee; font-size: 1px; line-height: 1px;
+    border: none;
+    background-color: #eee;
+}
+
+
+
+/*  Table Typography
+------------------------------------------------------------------------------------------------------ */
+
+th.focus, 
+td.focus {
+    font-weight: bold;
+}
+
+
+
+/*  RTE */
+
+ul.rte {
+/*    margin-left: 12px;*/
+    padding-left: 12px;
+    list-style-type: disc;
+}
+ul.rte li {
+    margin: 2px 0;
+}
+ul.rte ul {
+    margin: 0 0 0 15px;
+    font-size: 11px; font-weight: normal;
+    list-style-type: disc;
+}
+ul.rte ul li ul li {
+    margin: 0;
+}
+
+
+
+/*  RTE (Rich Text Edited)
+------------------------------------------------------------------------------------------------------ */
+
+.rte h2.subhead {
+    margin: 0;
+    font-size: 12px;
+}
+
+.rte h3 {
+    margin: 10px -10px 10px; padding: 7px 10px 6px;
+    font-size: 12px !important;
+    border-top: 1px solid #d4d4d4;
+    border-bottom: 1px solid #d4d4d4;
+}
+.rte .group h3 {
+    border-top: none;
+}
+
+
+.rte h2 + h3 {
+    margin-top: -11px !important;
+}
+.rte h4 {
+    margin: 10px 0 0;
+    font-size: 12px;
+}
+.rte h3:last-child, 
+.rte h4:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 4px; -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px;
+    
+}
+.rte p {
+    margin: 10px 0;
+}
+.rte .module p {
+    margin: 10px 0;
+    padding: 0 10px;
+}
+.rte > p:first-child {
+    margin-top: 0;
+}
+
+.rte .group h2 + p, 
+.rte .module h2 + p {
+    margin: 5px 0;
+    padding: 0 10px;
+    font-size: 11px;
+}
+
+.rte table p {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Workaround for problem reported in django-ticket #11817 */
+.rte h2 p, 
+.rte h4 p {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-weight: normal;
+}
+.rte h2 p {
+    font-weight: bold !important;
+}
+.rte h4:empty, 
+.rte p:empty, 
+.rte hr, 
+.rte br:first-child {
+    display: none !important;
+}
+
+
+.rte td {
+    border-left: 1px solid #f4f4f4;
+}
+.rte td:first-of-type {
+    border-left: none;
+}
+
+.rte ul, .rte ol {
+    margin: 10px 0 0 20px; padding: 0 0 0 10px;
+    font-weight: normal !important;
+}
+.rte ul li, .rte ol li {
+    margin: 0; padding: 0;
+}
+.rte ul li {
+    list-style-type: disc;
+}
+.rte ol li {
+    list-style-type: decimal;
+}
+
+.rte dd ul, .rte dd ol {
+    margin-top: 0;
+}
+
+.rte blockquote {
+    margin: 10px;
+}
+
+.rte blockquote table {
+    border: 1px solid #d4d4d4;
+    border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+}
+
+.rte dl, .rte dt, .rte dd {
+    margin: 0;
+}
+
+
+
+
+
+
+
+
+
