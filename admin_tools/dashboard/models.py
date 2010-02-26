@@ -462,7 +462,6 @@ class AppListDashboardModule(DashboardModule, AppListElementMixin):
         apps = {}
         for model, model_admin in admin.site._registry.items():
             perms = self._check_perms(request, model, model_admin)
-            print perms
             if not perms or ('add' not in perms and 'change' not in perms):
                 continue
             app_label = model._meta.app_label
@@ -572,9 +571,6 @@ class DashboardModuleGroup(DashboardModule):
         self.display = kwargs.get('display', 'tabs')
         
     def init_with_context(self, context):
-        for module in self.list:
-            module.init_with_context(context)
-        
         self.children = self.list
 
 class DashboardModuleColumn(DashboardModule):

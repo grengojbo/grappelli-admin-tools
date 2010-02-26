@@ -1,19 +1,20 @@
 {% extends "dashboard/module.html" %}
 {% load i18n %}
 {% block module_content %}
-        <ul>
+
+        <div class="module">
+            <h3>{{ sub_module.title }}</h3>
             {% for child in module.children %}
-            {% spaceless %}
-            <li>
-                {% if child.change_url %}<a href="{{ child.change_url }}">{{ child.title }}</a>{% else %}{{ child.title }}{% endif %}
-                {% if child.add_url or child.change_url %}
-                <ul>
-                    {% if child.add_url %}<li><a class="addlink" href="{{ child.add_url }}"><span class="icon">{% trans "Add" %}</span></a></li>{% endif %}
-                    {% if child.change_url %}<li><a class="changelink" href="{{ child.change_url }}"><span class="icon">{% trans "Change" %}</span></a></li>{% endif %}
-                </ul>
-                {% endif %}
-            </li>
-            {% endspaceless %}
+                <div class="row">
+                    {% if child.change_url %}<a href="{{ child.change_url }}">{{ child.title }}</a>{% else %}{{ child.title }}{% endif %}
+
+                    {% if child.add_url or child.change_url %}
+                        <ul class="actions">
+                            {% if child.add_url %}<li class="add-link"><a href="{{ child.add_url }}">{% trans "Add" %}</a></li>{% endif %}
+                            {% if child.change_url %}<li class="change-link"><a href="{{ child.change_url }}">{% trans "Change" %}</a></li>{% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
             {% endfor %}
-        </ul>
+        </div>
 {% endblock %}

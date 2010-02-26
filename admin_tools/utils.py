@@ -24,7 +24,6 @@ class AppListElementMixin(object):
                     return False
         
         elif type(self).__name__ == 'AppListDashboardModule':
-            print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
             if len(self.apps):
                 found = False
                 for pattern in self.apps:
@@ -38,7 +37,6 @@ class AppListElementMixin(object):
             return False
 
         # check whether user has any perm for this module
-        print model_admin
         perms = model_admin.get_model_perms(request)
         if True not in perms.values():
             return False

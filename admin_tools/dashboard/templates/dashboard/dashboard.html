@@ -9,7 +9,6 @@
 {% endif %}
 
 <div id="dashboard-panel">
-    <h3><a href="#">{% trans "Modules" %}</a></h3>
     {% if has_disabled_modules %}
     <ul>
         {% spaceless %}
@@ -27,12 +26,8 @@
     <div class="section-content">
         <div class="container-flexible">
             <h1>Administration</h1>
-                {% for column in dashboard.children %}
-                    <div class="column {{ column.className }}">
-                        {% for module in column.children %}
-                            {% admin_tools_render_dashboard_module module forloop.counter %}
-                        {% endfor %}
-                    </div>
+                {% for module in dashboard.children %}
+                    {% admin_tools_render_dashboard_module module forloop.counter %}
                 {% endfor %}
             </div>
         </div>
