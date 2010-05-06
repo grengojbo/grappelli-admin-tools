@@ -2,7 +2,6 @@
 Menu utilities.
 """
 
-import urllib
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
@@ -15,7 +14,7 @@ def get_admin_menu():
     menu_cls = getattr(
         settings,
         'ADMIN_TOOLS_MENU',
-        'admin_tools.menu.models.DefaultMenu'
+        'admin_tools.menu.DefaultMenu'
     )
     try:
         mod, inst = menu_cls.rsplit('.', 1)

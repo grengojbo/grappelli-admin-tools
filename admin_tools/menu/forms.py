@@ -1,7 +1,8 @@
+import urllib
+
 from django import forms
 
 from admin_tools.menu.models import Bookmark
-
 
 class BookmarkForm(forms.ModelForm):
     """
@@ -13,8 +14,12 @@ class BookmarkForm(forms.ModelForm):
         super(BookmarkForm, self).__init__(*args, **kwargs)
         self.user = user
 
+    def clean_url(self):
+        url = self.cleaned_data['url']
+        return urllib.unquote(url)
+
     def save(self, *args, **kwargs):
-        bookmark = super(BookmarkForm, self).save(*args, commit=False, **kwargs)
+        bookmark = super(BookmarkForm, self).save(commit=False, *args, **kwargs)
         bookmark.user = self.user
         bookmark.save()
         return bookmark

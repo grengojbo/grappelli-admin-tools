@@ -5,12 +5,9 @@ Dashboard utilities.
 from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse
-from django.http import HttpRequest
 from django.utils.importlib import import_module
 from django.utils.text import capfirst
 from admin_tools.dashboard import Registry
-from admin_tools.dashboard.models import *
 
 
 def get_dashboard(context, location):
@@ -31,7 +28,7 @@ def get_index_dashboard(context):
     dashboard_cls = getattr(
         settings,
         'ADMIN_TOOLS_INDEX_DASHBOARD',
-        'admin_tools.dashboard.models.DefaultIndexDashboard'
+        'admin_tools.dashboard.DefaultIndexDashboard'
     )
     try:
         mod, inst = dashboard_cls.rsplit('.', 1)
@@ -67,12 +64,12 @@ def get_app_index_dashboard(context):
     if app_label is not None and app_label in Registry.registry:
         return Registry.registry[app_label](app_title, model_list)
 
-    # try to discover a general app_index dashboard (with fallback to the 
+    # try to discover a general app_index dashboard (with fallback to the
     # default dashboard)
     dashboard_cls = getattr(
         settings,
         'ADMIN_TOOLS_APP_INDEX_DASHBOARD',
-        'admin_tools.dashboard.models.DefaultAppIndexDashboard'
+        'admin_tools.dashboard.DefaultAppIndexDashboard'
     )
     try:
         mod, inst = dashboard_cls.rsplit('.', 1)

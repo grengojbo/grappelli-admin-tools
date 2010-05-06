@@ -1,15 +1,7 @@
 """
 This module contains the base classes for menu and menu items.
 """
-
 from django.db import models
-from django.contrib import admin
-from django.core.urlresolvers import reverse
-from django.utils.safestring import mark_safe
-from django.utils.text import capfirst
-from django.utils.translation import ugettext_lazy as _
-from admin_tools.utils import AppListElementMixin
-
 
 class Bookmark(models.Model):
     """
@@ -26,33 +18,44 @@ class Bookmark(models.Model):
         db_table = 'admin_tools_menu_bookmark'
         ordering = ('id',)
 
+# for backward-compatibility
+from admin_tools import menu
+from admin_tools.menu import items
+from admin_tools.deprecate_utils import import_path_is_changed
 
-class Menu(object):
-    """
-    This is the base class for creating custom navigation menus.
-    A menu can have the following properties:
-    
-    ``template``
-        A string representing the path to template to use to render the menu.
-        As for any other template, the path must be relative to one of the 
-        directories of your ``TEMPLATE_DIRS`` setting.
-        Default value: "menu/menu.html".
-    
-    ``children``
-        A list of children menu items. All children items mus be instances of
-        the ``MenuItem`` class.
+class Menu(
+          import_path_is_changed(
+              'admin_tools.menu.models.Menu',
+              'admin_tools.menu.Menu'
+          ),
+          menu.Menu
+      ): pass
 
-    If you want to customize the look of your menu and it's menu items, you
-    can declare css stylesheets and/or javascript files to include when 
-    rendering the menu, for example::
+class DefaultMenu(
+          import_path_is_changed(
+              'admin_tools.menu.models.DefaultMenu',
+              'admin_tools.menu.DefaultMenu'
+          ),
+          menu.DefaultMenu
+      ): pass
 
-        from admin_tools.menu.models import *
+class MenuItem(
+          import_path_is_changed(
+              'admin_tools.menu.models.MenuItem',
+              'admin_tools.menu.items.MenuItem'
+          ),
+          items.MenuItem
+      ): pass
 
-        class MyMenu(Menu):
-            class Media:
-                css = ('/media/css/mymenu.css',)
-                js = ('/media/js/mymenu.js',)
+class AppListMenuItem(
+          import_path_is_changed(
+              'admin_tools.menu.models.AppListMenuItem',
+              'admin_tools.menu.items.AppList'
+          ),
+          items.AppList
+      ): pass
 
+<<<<<<< local
     Here's a concrete example of a custom menu::
 
         from django.core.urlresolvers import reverse
@@ -335,3 +338,12 @@ class DefaultMenu(Menu):
             title=_('Administration'),
             models=('django.contrib',)
         ))
+=======
+class BookmarkMenuItem(
+          import_path_is_changed(
+              'admin_tools.menu.models.BookmarkMenuItem',
+              'admin_tools.menu.items.Bookmarks'
+          ),
+          items.Bookmarks
+      ): pass
+>>>>>>> other

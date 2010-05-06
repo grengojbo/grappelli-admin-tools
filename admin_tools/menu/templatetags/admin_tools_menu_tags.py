@@ -9,13 +9,13 @@ To load the menu tags in your templates: ``{% load admin_tools_menu_tags %}``.
 """
 
 from django import template
-from django.conf import settings
-from django.http import HttpRequest
-from admin_tools.menu.models import Bookmark, BookmarkMenuItem
+from admin_tools.utils import get_media_url
+from admin_tools.menu import items
+from admin_tools.menu.models import Bookmark
 from admin_tools.menu.utils import get_admin_menu
 
 register = template.Library()
-tag_func = register.inclusion_tag('menu/dummy.html', takes_context=True)
+tag_func = register.inclusion_tag('admin_tools/menu/dummy.html', takes_context=True)
 
 def admin_tools_render_menu(context, menu=None):
     """
@@ -29,7 +29,7 @@ def admin_tools_render_menu(context, menu=None):
     menu.init_with_context(context)
     has_bookmark_item = False
     bookmark = None
-    if len([c for c in menu.children if isinstance(c, BookmarkMenuItem)]) > 0:
+    if len([c for c in menu.children if isinstance(c, items.Bookmarks)]) > 0:
         has_bookmark_item = True
         url = context['request'].get_full_path()
         try:
@@ -40,7 +40,7 @@ def admin_tools_render_menu(context, menu=None):
     context.update({
         'template': menu.template,
         'menu': menu,
-        'media_url': settings.MEDIA_URL.rstrip('/'),
+        'media_url': get_media_url(),
         'has_bookmark_item': has_bookmark_item,
         'bookmark': bookmark,
     })
@@ -59,6 +59,7 @@ def admin_tools_render_menu_item(context, item, index=None):
         'template': item.template,
         'item': item,
         'index': index,
+        'selected': item.is_selected(context['request'])
     })
     return context
 admin_tools_render_menu_item = tag_func(admin_tools_render_menu_item)
@@ -74,9 +75,9 @@ def admin_tools_render_menu_css(context, menu=None):
         menu = get_admin_menu()
 
     context.update({
-        'template': 'menu/css.html',
+        'template': 'admin_tools/menu/css.html',
         'css_files': menu.Media.css,
-        'media_url': settings.MEDIA_URL.rstrip('/'),
+        'media_url': get_media_url(),
     })
     return context
 admin_tools_render_menu_css = tag_func(admin_tools_render_menu_css)
