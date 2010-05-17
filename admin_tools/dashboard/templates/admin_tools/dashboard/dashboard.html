@@ -1,76 +1,20 @@
 {% load i18n admin_tools_dashboard_tags %}
-<script type="text/javascript" charset="utf-8">
-    // load jquery if it's not loaded yet
-    if (typeof jQuery == 'undefined') {
-        var script_url = '{{ media_url }}/admin_tools/js/jquery/jquery.min.js';
-        document.write(unescape('%3Cscript src="' + script_url + '" type="text/javascript"%3E%3C/script%3E'));
-    }
-    // load jquery ui if it's not loaded yet
-    if (typeof jQuery.ui == 'undefined') {
-        var script_url = '{{ media_url }}/admin_tools/js/jquery/jquery-ui.min.js';
-        document.write(unescape('%3Cscript src="' + script_url + '" type="text/javascript"%3E%3C/script%3E'));
-    }
-    // load json if it's not loaded yet
-    if (typeof JSON == 'undefined') {
-        var script_url = '{{ media_url }}/admin_tools/js/json.min.js';
-        document.write(unescape('%3Cscript src="' + script_url + '" type="text/javascript"%3E%3C/script%3E'));
-    }
-    // load jquery cookie if it's not loaded yet
-    if (typeof jQuery.cookie == 'undefined') {
-        var script_url = '{{ media_url }}/admin_tools/js/jquery/jquery.cookie.min.js';
-        document.write(unescape('%3Cscript src="' + script_url + '" type="text/javascript"%3E%3C/script%3E'));
-    }
-</script>
-<script type="text/javascript" src="{{ media_url }}/admin_tools/js/jquery/jquery.dashboard.js"></script>
-{% if dashboard.Media.js %}
-{% for js in dashboard.Media.js %}
-<script type="text/javascript" src="{{ media_url }}/{{ js }}"></script>{% endfor %}
-{% endif %}
 
-{% if dashboard.title %}
-<h1 class="dashboard-title">{{ dashboard.title }}</h1>
-{% endif %}
+<h1>Website-Verwaltung</h1>
 
-<script type="text/javascript">
-// <![CDATA[
-jQuery(function($) {
-    $('#{{ dashboard.get_id }}').dashboard({
-        'columns': {{ dashboard.columns }},
-        'load_preferences_function': function(options) {
-            return {% autoescape off %}{{ dashboard_preferences }}{% endautoescape %};
-        },
-        'save_preferences_function': function(options, preferences) {
-            jQuery.post(
-                '{% url admin-tools-dashboard-set-preferences %}',
-                { data: JSON.stringify(preferences) }
-            );
-        }
-    });
-});
-//]]>
-</script>
-
-<div id="dashboard-panel">
-    {% if has_disabled_modules %}
-    <ul>
-        {% spaceless %}
+<div class="container-grid">
+    <div class="column span-12">
         {% for module in dashboard.children %}
-        {% if not module.enabled %}
-        <li><a href="#" rel="module_{{ forloop.counter }}" class="addlink add-dashboard-module">{{ module.title }}</a></li>
-        {% endif %}
+            {% if module.column == 1 %}
+                {% admin_tools_render_dashboard_module module forloop.counter %}
+            {% endif %}
         {% endfor %}
-        {% endspaceless %}
-    </ul>
-    {% endif %}
-</div>
-
-<div id="content" class="content-flexible">
-    <div class="section-content">
-        <div class="container-flexible">
-            <h1>Administration</h1>
-    {% for module in dashboard.children %}
-{% admin_tools_render_dashboard_module module forloop.counter %}{% endfor %}
-            </div>
-        </div>
+    </div>
+    <div class="column span-6">
+        {% for module in dashboard.children %}
+            {% if module.column == 2 %}
+                {% admin_tools_render_dashboard_module module forloop.counter %}
+            {% endif %}
+        {% endfor %}
     </div>
 </div>

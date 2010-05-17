@@ -1,18 +1,15 @@
 {% extends "admin_tools/dashboard/module.html" %}
 {% load i18n %}
 {% block module_content %}
-<ul>
-    {% spaceless %}
-    {% for child in module.children %}
-    <li class="{% cycle 'odd' 'even' %}">
-        <span class="float-right">{{ child.action_time|date }}</span>
-        {% if child.is_deletion %}
-        <span class="deletelink">{% if child.content_type %}{% filter capfirst %}{% trans child.content_type.name %}{% endfilter %}&nbsp;{% endif %}{{ child.object_repr }}</span>
-        {% else %}
-        <a href="{% url admin:index %}{{ child.get_admin_url }}" class="{% if child.is_addition %} addlink{% endif %}{% if child.is_change %} changelink{% endif %}">{% if child.content_type %}{% filter capfirst %}{% trans child.content_type.name %}{% endfilter %}&nbsp;{% endif %}{{ child.object_repr }}</a>
-        {% endif %}
-    </li>
-    {% endfor %}
-    {% endspaceless %}
-</ul>
+<div class="module actions" id="recent-actions-module">
+    <h2>{% trans 'Recent Actions' %}</h2>
+    <div class="module">
+        <h3>{% trans 'My Actions' %}</h3>
+        <ul>
+            {% for entry in module.children %}
+            <li class="{% if entry.is_addition %}add-link{% endif %}{% if entry.is_change %}change-link{% endif %}{% if entry.is_deletion %}delete-link{% endif %}">{% if not entry.is_deletion %}<a href="{{ entry.get_admin_url }}">{% endif %}{{ entry.object_repr }}{% if not entry.is_deletion %}</a>{% endif %}<br /><span class="mini quiet">{% filter capfirst %}{% trans entry.content_type.name %}{% endfilter %}</span></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

@@ -67,6 +67,7 @@ class DashboardModule(object):
         self.post_content = kwargs.get('post_content')
         self.template = kwargs.get('template', 'admin_tools/dashboard/module.html')
         self.children = kwargs.get('children', [])
+        self.column = kwargs.get('column', 1)
 
     def init_with_context(self, context):
         """
