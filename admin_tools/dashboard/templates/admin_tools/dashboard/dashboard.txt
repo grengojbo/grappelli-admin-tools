@@ -115,6 +115,7 @@ class CustomAppIndexDashboard(AppIndexDashboard):
 
         # append a recent actions module
         self.children.append(modules.RecentActions(
+            column=2,
             title=_('Recent Actions'),
             include_list=self.get_app_content_types(),
         ))

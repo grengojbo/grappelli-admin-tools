@@ -3,7 +3,7 @@
 {% block module_content %}
     {% for child in module.children %}
         <div class="module">
-            <h3>{{ child.title }}</h3>
+            <h2><a href="{{ child.url }}" class="section">{{ child.title }}</a></h2>
             {% for model in child.models %}
                 <div class="row">
                     {% if model.change_url %}

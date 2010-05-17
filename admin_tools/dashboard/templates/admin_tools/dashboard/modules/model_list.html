@@ -1,9 +1,8 @@
 {% extends "admin_tools/dashboard/module.html" %}
 {% load i18n %}
 {% block module_content %}
-
         <div class="module">
-            <h3>{{ sub_module.title }}</h3>
+            <h3>{{ module.title }}</h3>
             {% for child in module.children %}
                 <div class="row">
                     {% if child.change_url %}<a href="{{ child.change_url }}">{{ child.title }}</a>{% else %}{{ child.title }}{% endif %}
