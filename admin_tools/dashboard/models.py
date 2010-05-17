@@ -95,4 +95,3 @@ class FeedDashboardModule(
           ),
           modules.Feed
       ): pass
-

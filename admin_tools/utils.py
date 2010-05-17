@@ -86,13 +86,14 @@ class AppListElementMixin(object):
         # from include_list/exclude_list args
         included = self.models[:]
         included.extend([elem+"*" for elem in self.include_list])
-        
+
         excluded = self.exclude[:]
         excluded.extend([elem+"*" for elem in self.exclude_list])
         if self.exclude_list and not included:
             included = ["*"]
         return filter_models(request, included, excluded)
-    
+
+
     def _get_admin_change_url(self, model):
         """
         Returns the admin change url.

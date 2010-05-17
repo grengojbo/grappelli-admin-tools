@@ -22,7 +22,6 @@
     }
 </script>
 <script type="text/javascript" src="{{ media_url }}/admin_tools/js/jquery/jquery.dashboard.js"></script>
-
 {% if dashboard.Media.js %}
 {% for js in dashboard.Media.js %}
 <script type="text/javascript" src="{{ media_url }}/{{ js }}"></script>{% endfor %}
@@ -31,7 +30,6 @@
 {% if dashboard.title %}
 <h1 class="dashboard-title">{{ dashboard.title }}</h1>
 {% endif %}
-
 
 <script type="text/javascript">
 // <![CDATA[
@@ -57,9 +55,9 @@ jQuery(function($) {
     <ul>
         {% spaceless %}
         {% for module in dashboard.children %}
-            {% if not module.enabled %}
-                <li><a href="#" rel="module_{{ forloop.counter }}" class="addlink add-dashboard-module">{{ module.title }}</a></li>
-            {% endif %}
+        {% if not module.enabled %}
+        <li><a href="#" rel="module_{{ forloop.counter }}" class="addlink add-dashboard-module">{{ module.title }}</a></li>
+        {% endif %}
         {% endfor %}
         {% endspaceless %}
     </ul>
@@ -70,9 +68,8 @@ jQuery(function($) {
     <div class="section-content">
         <div class="container-flexible">
             <h1>Administration</h1>
-                {% for module in dashboard.children %}
-                    {% admin_tools_render_dashboard_module module forloop.counter %}
-                {% endfor %}
+    {% for module in dashboard.children %}
+{% admin_tools_render_dashboard_module module forloop.counter %}{% endfor %}
             </div>
         </div>
     </div>
