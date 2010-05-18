@@ -3,12 +3,13 @@
 {% block module_content %}
 <div class="group {% for item in module.css_classes %}{{ item }} {% endfor %}">
     <h2>{{ module.title }}</h2>
-    <div class="module">
 {% spaceless %}
         {% if module.pre_content %}
             <p>{{ module.pre_content }}</p>
         {% endif %}
     {% for child in module.children %}
+    
+    <div class="module">
         <h3><a href="{{ child.url }}">{{ child.title }}</a></h3>
         {% for model in child.models %}
             <div class="row">
@@ -33,11 +34,12 @@
                 {% endif %}
             </div>
         {% endfor %}
+        
+    </div>
     {% endfor %}
         {% if module.post_content %}
             <p>{{ module.post_content }}</p>
         {% endif %}
 {% endspaceless %}
-    </div>
 </div>
 {% endblock %}
