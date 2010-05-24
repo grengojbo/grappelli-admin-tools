@@ -1,5 +1,10 @@
 {% load i18n admin_tools_dashboard_tags %}
 
+{% if dashboard.Media.js %}
+{% for js in dashboard.Media.js %}
+<script type="text/javascript" src="{{ media_url }}/{{ js }}"></script>{% endfor %}
+{% endif %}
+
 <div class="container-grid">
     <div class="column span-12">
         {% for module in dashboard.children %}
