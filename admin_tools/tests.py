@@ -2,6 +2,8 @@ import warnings
 from unittest import TestCase
 
 class DeprecationTest(TestCase):
+    # python >= 2.6 is required to make deprecation warning tests useful
+    # this DeprecationTest is always successful for python < 2.6
 
     def assertDeprecated(self, cls, *args, **kwargs):
         if hasattr(warnings, 'catch_warnings'):

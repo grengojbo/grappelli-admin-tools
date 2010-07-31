@@ -1,10 +1,22 @@
-{% extends "dashboard/module.html" %}
-{% load i18n admin_tools_dashboard_tags %}
+{% extends "admin_tools/dashboard/module.html" %}
+{% load i18n %}
 {% block module_content %}
-    <div class="group collapsible open">
-        <h2 class="collapsible-handler">{{ module.title }}</h2>
-        {% for sub_module in module.children %}
-            {% admin_tools_render_dashboard_module sub_module forloop.counter %}
-        {% endfor %}
+    <div class="group {% for item in module.css_classes %}{{ item }} {% endfor %}">
+        <h2>{{ module.title }}</h2>
+        <div class="module">         
+            {% for child in module.children %}
+                <div class="row">
+                    {% if child.change_url %}<a href="{{ child.change_url }}">{{ child.title }}</a>{% else %}{{ child.title }}{% endif %}
+
+                    {% if child.add_url or child.change_url %}
+                        <ul class="actions">
+                            {% if child.add_url %}<li class="add-link"><a href="{{ child.add_url }}">{% trans "Add" %}</a></li>{% endif %}
+                            {% if child.change_url %}<li class="change-link"><a href="{{ child.change_url }}">{% trans "Change" %}</a></li>{% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
+

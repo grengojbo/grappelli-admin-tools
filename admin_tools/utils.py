@@ -30,11 +30,14 @@ def filter_models(request, models, exclude):
     # performance is not a bottleneck. If it is not the case then the code
     # should be optimized.
 
-    for pattern in models:
-        for item in items:
-            model, perms = item
-            if fnmatch(full_name(model), pattern) and item not in included:
-                included.append(item)
+    if len(models) == 0:
+        included = items
+    else:
+        for pattern in models:
+            for item in items:
+                model, perms = item
+                if fnmatch(full_name(model), pattern) and item not in included:
+                    included.append(item)
 
     result = included[:]
     for pattern in exclude:
@@ -52,7 +55,7 @@ class AppListElementMixin(object):
     """
     def _check_perms(self, request, model, model_admin):
         mod = '%s.%s' % (model.__module__, model.__name__)
-        
+
         if type(self).__name__ == 'ModelListDashboardModule':
             if len(self.models):
                 found = False
@@ -61,7 +64,7 @@ class AppListElementMixin(object):
                         found = True
                 if not found:
                     return False
-        
+
         elif type(self).__name__ == 'AppListDashboardModule':
             if len(self.apps):
                 found = False
@@ -70,7 +73,7 @@ class AppListElementMixin(object):
                         found = True
                 if not found:
                     return False
-        
+
         # check that the user has module perms
         if not request.user.has_module_perms(model._meta.app_label):
             return False
@@ -80,7 +83,7 @@ class AppListElementMixin(object):
         if True not in perms.values():
             return False
         return perms
-    
+
     def _visible_models(self, request):
         # compatibility layer: generate models/exclude patterns
         # from include_list/exclude_list args
