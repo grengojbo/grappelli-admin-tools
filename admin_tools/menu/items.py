@@ -185,7 +185,7 @@ class AppList(MenuItem, AppListElementMixin):
                 }
             apps[app_label]['models'].append({
                 'title': capfirst(model._meta.verbose_name_plural),
-                'url': self._get_admin_change_url(model)
+                'url': self._get_admin_change_url(model, context)
             })
 
         apps_sorted = apps.keys()

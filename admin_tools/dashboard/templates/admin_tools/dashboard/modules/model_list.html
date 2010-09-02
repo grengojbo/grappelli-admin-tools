@@ -1,8 +1,15 @@
 {% extends "admin_tools/dashboard/module.html" %}
 {% load i18n %}
 {% block module_content %}
-        <div class="module">
-            <h2>{{ module.title }}</h2>
+
+{% if subindex %}
+    <div class="module {% for item in module.css_classes %}{{ item }} {% endfor %}">
+        <h3>{{ module.title }}</h3>
+{% else %}
+    <div class="module {% for item in module.css_classes %}{{ item }} {% endfor %}">
+        <h2>{{ module.title }}</h2>
+{% endif %}
+            
             {% for child in module.children %}
                 <div class="row">
                     {% if child.change_url %}<a href="{{ child.change_url }}">{{ child.title }}</a>{% else %}{{ child.title }}{% endif %}

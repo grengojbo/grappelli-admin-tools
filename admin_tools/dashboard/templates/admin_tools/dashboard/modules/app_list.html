@@ -1,8 +1,14 @@
 {% extends "admin_tools/dashboard/module.html" %}
 {% load i18n %}
 {% block module_content %}
-<div class="module {% for item in module.css_classes %}{{ item }} {% endfor %}">
-    <h3>{{ module.title }}</h2>
+{% if subindex %}
+    <div class="module {% for item in module.css_classes %}{{ item }} {% endfor %}">
+        <h3>{{ module.title }}</h3>
+{% else %}
+    <div class="group {% for item in module.css_classes %}{{ item }} {% endfor %}">
+        <h2>{{ module.title }}</h2>
+{% endif %}
+    
 {% spaceless %}
         {% if module.pre_content %}
             <p>{{ module.pre_content }}</p>
@@ -10,7 +16,12 @@
     {% for child in module.children %}
     
     <div class="module">
-        <h4><a href="{{ child.url }}">{{ child.title }}</a></h3>
+        {% if subindex %}
+            <h4><a href="{{ child.url }}">{{ child.title }}</a></h4>
+        {% else %}
+            <h3><a href="{{ child.url }}">{{ child.title }}</a></h3>
+        {% endif %}
+        
         {% for model in child.models %}
             <div class="row">
                 {% if model.change_url %}

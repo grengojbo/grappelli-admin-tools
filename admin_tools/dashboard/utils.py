@@ -7,7 +7,11 @@ from django.contrib import admin
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 from django.utils.text import capfirst
+from django.core.urlresolvers import reverse
+
 from admin_tools.dashboard import Registry
+from admin_tools.utils import get_admin_site
+import types
 
 
 def get_dashboard(context, location):
@@ -31,9 +35,22 @@ def get_index_dashboard(context):
         'ADMIN_TOOLS_INDEX_DASHBOARD',
         'admin_tools.dashboard.DefaultIndexDashboard'
     )
-    mod, inst = dashboard_cls.rsplit('.', 1)
-    mod = import_module(mod)
-    return getattr(mod, inst)()
+    
+    if type(dashboard_cls) is types.DictType:
+        curr_url = context.get('request').META['PATH_INFO']
+        
+        for key in dashboard_cls:
+            admin_site_mod, admin_site_inst = key.rsplit('.', 1)
+            admin_url = reverse('%s:index' % admin_site_inst)
+            if curr_url.startswith(admin_url):
+                mod, inst = dashboard_cls[key].rsplit('.', 1)
+                mod = import_module(mod)
+                return getattr(mod, inst)()
+    else:
+        mod, inst = dashboard_cls.rsplit('.', 1)
+        mod = import_module(mod)
+        return getattr(mod, inst)()
+    
 
 
 def get_app_index_dashboard(context):
@@ -45,7 +62,9 @@ def get_app_index_dashboard(context):
     model_list = []
     app_label = None
     app_title = app['name']
-    for model, model_admin in admin.site._registry.items():
+    admin_site = get_admin_site(context=context)
+    
+    for model, model_admin in admin_site._registry.items():
         if app['name'] == model._meta.app_label.title():
             split = model.__module__.find(model._meta.app_label)
             app_label = model.__module__[0:split] + model._meta.app_label
@@ -66,6 +85,19 @@ def get_app_index_dashboard(context):
         'ADMIN_TOOLS_APP_INDEX_DASHBOARD',
         'admin_tools.dashboard.DefaultAppIndexDashboard'
     )
-    mod, inst = dashboard_cls.rsplit('.', 1)
-    mod = import_module(mod)
-    return getattr(mod, inst)(app_title, model_list)
+    
+    if type(dashboard_cls) is types.DictType:
+        curr_url = context.get('request').META['PATH_INFO']
+        
+        for key in dashboard_cls:
+            admin_site_mod, admin_site_inst = key.rsplit('.', 1)
+            admin_url = reverse('%s:index' % admin_site_inst)
+            if curr_url.startswith(admin_url):
+                mod, inst = dashboard_cls[key].rsplit('.', 1)
+                mod = import_module(mod)
+                return getattr(mod, inst)(app_title, model_list)
+    else:
+        mod, inst = dashboard_cls.rsplit('.', 1)
+        mod = import_module(mod)
+        return getattr(mod, inst)(app_title, model_list)
+    

@@ -1,7 +1,7 @@
 {% extends "admin_tools/dashboard/module.html" %}
 {% load admin_tools_dashboard_tags %}
 {% block module_content %}
-<div class="group">
+<div class="group {% for item in module.css_classes %}{{ item }} {% endfor %}">
     {% spaceless %}
     <h2>{{ module.title }}</h2>
     

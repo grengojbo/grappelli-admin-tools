@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
-from admin_tools.utils import AppListElementMixin
+from admin_tools.utils import AppListElementMixin, get_admin_site_name
 
 
 class DashboardModule(object):
@@ -355,15 +355,15 @@ class AppList(DashboardModule, AppListElementMixin):
             if app_label not in apps:
                 apps[app_label] = {
                     'title': capfirst(app_label.title()),
-                    'url': reverse('admin:app_list', args=(app_label,)),
+                    'url': reverse('%s:app_list' % get_admin_site_name(context), args=(app_label,)),
                     'models': []
                 }
             model_dict = {}
             model_dict['title'] = capfirst(model._meta.verbose_name_plural)
             if perms['change']:
-                model_dict['change_url'] = self._get_admin_change_url(model)
+                model_dict['change_url'] = self._get_admin_change_url(model, context)
             if perms['add']:
-                model_dict['add_url'] = self._get_admin_add_url(model)
+                model_dict['add_url'] = self._get_admin_add_url(model, context)
             apps[app_label]['models'].append(model_dict)
 
         apps_sorted = apps.keys()
@@ -434,9 +434,9 @@ class ModelList(DashboardModule, AppListElementMixin):
             model_dict = {}
             model_dict['title'] = capfirst(model._meta.verbose_name_plural)
             if perms['change']:
-                model_dict['change_url'] = self._get_admin_change_url(model)
+                model_dict['change_url'] = self._get_admin_change_url(model, context)
             if perms['add']:
-                model_dict['add_url'] = self._get_admin_add_url(model)
+                model_dict['add_url'] = self._get_admin_add_url(model, context)
             self.children.append(model_dict)
 
 
