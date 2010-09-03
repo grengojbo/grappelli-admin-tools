@@ -4,10 +4,14 @@
 
 {% if subindex %}
     <div class="module {% for item in module.css_classes %}{{ item }} {% endfor %}">
-        <h3>{{ module.title }}</h3>
+        {% if module.title %}
+            <h3>{{ module.title }}</h3>
+        {% endif %}
 {% else %}
     <div class="module {% for item in module.css_classes %}{{ item }} {% endfor %}">
-        <h2>{{ module.title }}</h2>
+        {% if module.title %}
+            <h2>{{ module.title }}</h2>
+        {% endif %}
 {% endif %}
             
             {% for child in module.children %}
