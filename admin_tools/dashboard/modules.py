@@ -354,7 +354,7 @@ class AppList(DashboardModule, AppListElementMixin):
             app_label = model._meta.app_label
             if app_label not in apps:
                 apps[app_label] = {
-                    'title': capfirst(app_label.title()),
+                    'title': capfirst(_(app_label.title())),
                     'url': reverse('%s:app_list' % get_admin_site_name(context), args=(app_label,)),
                     'models': []
                 }
