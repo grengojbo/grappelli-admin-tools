@@ -15,4 +15,18 @@
 
 {% block content %}
     {% admin_tools_render_dashboard %}
+    
+    <script type="text/javascript" charset="utf-8">
+        (function($){
+            /**
+             * remove all div.group's which have no items inside
+             * this happens when an Group has Modules with no items only.
+             */
+            $("div.group").each(function() {
+                if ($(this).children("div").size() == 0) {
+                    $(this).remove();
+                }
+            });
+        })(django.jQuery);
+    </script>
 {% endblock %}
