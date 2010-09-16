@@ -20,16 +20,17 @@ def get_admin_site(context=None, request=None):
     
     if type(dashboard_cls) is types.DictType:
         if context:
-            curr_url = context.get('request').META['PATH_INFO']
-        else:
-            curr_url = request.META['PATH_INFO']
+            request = context.get('request')
+        
+        curr_url = request.META['PATH_INFO']
         
         for key in dashboard_cls:
             mod, inst = key.rsplit('.', 1)
-            admin_url = reverse('%s:index' % inst)
+            mod = import_module(mod)
+            admin_site = getattr(mod, inst)
+            admin_url = reverse('%s:index' % admin_site.name)
             if curr_url.startswith(admin_url):
-                mod = import_module(mod)
-                return getattr(mod, inst)
+                return admin_site
     else:
         return admin.site
 

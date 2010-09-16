@@ -1,17 +1,15 @@
 {% extends "admin_tools/dashboard/module.html" %}
 {% load i18n %}
 {% block module_content %}
-{% if subindex %}
     <div class="module {% for item in module.css_classes %}{{ item }} {% endfor %}">
-        {% if module.title %}
+    
+    {% if module.title %}
+        {% if subindex %}
             <h3>{{ module.title }}</h3>
-        {% endif %}
-{% else %}
-    <div class="group {% for item in module.css_classes %}{{ item }} {% endfor %}">
-        {% if module.title %}
+        {% else %}
             <h2>{{ module.title }}</h2>
         {% endif %}
-{% endif %}
+    {% endif %}
     
 {% spaceless %}
         {% if module.pre_content %}

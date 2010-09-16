@@ -280,7 +280,7 @@ class LinkList(DashboardModule):
 
     def __init__(self, **kwargs):
         super(LinkList, self).__init__(**kwargs)
-        self.title = kwargs.get('title', _('Links'))
+        self.title = kwargs.get('title')
         self.template = kwargs.get('template',
                                    'admin_tools/dashboard/modules/link_list.html')
         self.layout = kwargs.get('layout', 'stacked')

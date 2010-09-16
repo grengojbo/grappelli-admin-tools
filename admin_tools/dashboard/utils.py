@@ -41,7 +41,9 @@ def get_index_dashboard(context):
         
         for key in dashboard_cls:
             admin_site_mod, admin_site_inst = key.rsplit('.', 1)
-            admin_url = reverse('%s:index' % admin_site_inst)
+            admin_site_mod = import_module(admin_site_mod)
+            admin_site = getattr(admin_site_mod, admin_site_inst)
+            admin_url = reverse('%s:index' % admin_site.name)
             if curr_url.startswith(admin_url):
                 mod, inst = dashboard_cls[key].rsplit('.', 1)
                 mod = import_module(mod)
@@ -91,7 +93,9 @@ def get_app_index_dashboard(context):
         
         for key in dashboard_cls:
             admin_site_mod, admin_site_inst = key.rsplit('.', 1)
-            admin_url = reverse('%s:index' % admin_site_inst)
+            admin_site_mod = import_module(admin_site_mod)
+            admin_site = getattr(admin_site_mod, admin_site_inst)
+            admin_url = reverse('%s:index' % admin_site.name)
             if curr_url.startswith(admin_url):
                 mod, inst = dashboard_cls[key].rsplit('.', 1)
                 mod = import_module(mod)
