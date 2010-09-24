@@ -1,9 +1,13 @@
+"""
+Module where admin tools dashboard modules classes are defined.
+"""
+
 from django.utils.text import capfirst
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
-from admin_tools.utils import AppListElementMixin
+from admin_tools.utils import AppListElementMixin, get_admin_site_name
 
 
 class DashboardModule(object):
@@ -170,7 +174,7 @@ class Group(DashboardModule):
         of the following values: 'tabs' (default), 'accordion' or 'stacked'.
 
     Here's an example of modules group::
-
+        
         from admin_tools.dashboard import modules, Dashboard
 
         class MyDashboard(Dashboard):
@@ -201,10 +205,10 @@ class Group(DashboardModule):
         self.template = kwargs.get('template',
                                    'admin_tools/dashboard/modules/group.html')
         self.display = kwargs.get('display', 'tabs')
-
+        
     def init_with_context(self, context):
         for module in self.children:
-            # to simplify the whole stuff, modules have some limitations,
+            # to simplify the whole stuff, modules have some limitations, 
             # they cannot be dragged, collapsed or closed
             module.collapsible = False
             module.draggable = False
@@ -276,7 +280,7 @@ class LinkList(DashboardModule):
 
     def __init__(self, **kwargs):
         super(LinkList, self).__init__(**kwargs)
-        self.title = kwargs.get('title', _('Links'))
+        self.title = kwargs.get('title')
         self.template = kwargs.get('template',
                                    'admin_tools/dashboard/modules/link_list.html')
         self.layout = kwargs.get('layout', 'stacked')
@@ -350,16 +354,16 @@ class AppList(DashboardModule, AppListElementMixin):
             app_label = model._meta.app_label
             if app_label not in apps:
                 apps[app_label] = {
-                    'title': capfirst(app_label.title()),
-                    'url': reverse('admin:app_list', args=(app_label,)),
+                    'title': capfirst(_(app_label.title())),
+                    'url': reverse('%s:app_list' % get_admin_site_name(context), args=(app_label,)),
                     'models': []
                 }
             model_dict = {}
             model_dict['title'] = capfirst(model._meta.verbose_name_plural)
             if perms['change']:
-                model_dict['change_url'] = self._get_admin_change_url(model)
+                model_dict['change_url'] = self._get_admin_change_url(model, context)
             if perms['add']:
-                model_dict['add_url'] = self._get_admin_add_url(model)
+                model_dict['add_url'] = self._get_admin_add_url(model, context)
             apps[app_label]['models'].append(model_dict)
 
         apps_sorted = apps.keys()
@@ -430,9 +434,9 @@ class ModelList(DashboardModule, AppListElementMixin):
             model_dict = {}
             model_dict['title'] = capfirst(model._meta.verbose_name_plural)
             if perms['change']:
-                model_dict['change_url'] = self._get_admin_change_url(model)
+                model_dict['change_url'] = self._get_admin_change_url(model, context)
             if perms['add']:
-                model_dict['add_url'] = self._get_admin_add_url(model)
+                model_dict['add_url'] = self._get_admin_add_url(model, context)
             self.children.append(model_dict)
 
 
@@ -599,5 +603,3 @@ class Feed(DashboardModule):
                 # no date for certain feeds
                 pass
             self.children.append(entry)
-
-

@@ -104,6 +104,14 @@ class MenuItem(object):
         return self.url == current_url or \
             len([c for c in self.children if c.is_selected(request)]) > 0
 
+    def is_empty(self):
+        """
+        Helper method that returns ``True`` if the menu item is empty.
+        This method always returns ``False`` for basic items, but can return 
+        ``True`` if the item is an AppList.
+        """
+        return False
+
 
 class AppList(MenuItem, AppListElementMixin):
     """
@@ -177,7 +185,7 @@ class AppList(MenuItem, AppListElementMixin):
                 }
             apps[app_label]['models'].append({
                 'title': capfirst(model._meta.verbose_name_plural),
-                'url': self._get_admin_change_url(model)
+                'url': self._get_admin_change_url(model, context)
             })
 
         apps_sorted = apps.keys()
@@ -190,6 +198,24 @@ class AppList(MenuItem, AppListElementMixin):
             for model_dict in apps[app]['models']:
                 item.children.append(MenuItem(**model_dict))
             self.children.append(item)
+
+    def is_empty(self):
+        """
+        Helper method that returns ``True`` if the applist menu item has no 
+        children.
+
+        >>> from admin_tools.menu.items import MenuItem, AppList
+        >>> item = AppList(title='My menu item')
+        >>> item.is_empty()
+        True
+        >>> item.children.append(MenuItem(title='foo'))
+        >>> item.is_empty()
+        False
+        >>> item.children = []
+        >>> item.is_empty()
+        True
+        """
+        return len(self.children) == 0
 
 
 class Bookmarks(MenuItem, AppListElementMixin):

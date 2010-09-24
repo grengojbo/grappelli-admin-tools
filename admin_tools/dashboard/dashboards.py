@@ -1,9 +1,16 @@
+"""
+Module where admin tools dashboard classes are defined.
+"""
+
 from django.template.defaultfilters import slugify
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
+from django.contrib import admin
+
 from admin_tools.dashboard import modules
+
 
 class Dashboard(object):
     """
@@ -79,6 +86,7 @@ class Dashboard(object):
         self.template = kwargs.get('template', 'admin_tools/dashboard/dashboard.html')
         self.columns = kwargs.get('columns', 2)
         self.children = kwargs.get('children', [])
+        self.admin_site = kwargs.get('admin_site', admin.site)
 
     def init_with_context(self, context):
         """
@@ -185,9 +193,6 @@ class AppIndexDashboard(Dashboard):
         return '%s-dashboard' % slugify(unicode(self.app_title))
 
 
-
-
-
 class DefaultIndexDashboard(Dashboard):
     """
     The default dashboard displayed on the admin index page.
@@ -201,7 +206,7 @@ class DefaultIndexDashboard(Dashboard):
     """
     def __init__(self, **kwargs):
         Dashboard.__init__(self, **kwargs)
-
+        
         # append a link list module for "quick links"
         self.children.append(modules.LinkList(
             title=_('Quick links'),

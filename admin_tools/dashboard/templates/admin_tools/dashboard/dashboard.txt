@@ -111,7 +111,7 @@ class CustomAppIndexDashboard(AppIndexDashboard):
 
         # append a model list module
         self.children.append(modules.ModelList(
-            title=self.app_title,
+            title=_(self.app_title),
             models=self.models,
         ))
 
