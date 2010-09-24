@@ -174,7 +174,7 @@ class Group(DashboardModule):
         of the following values: 'tabs' (default), 'accordion' or 'stacked'.
 
     Here's an example of modules group::
-        
+
         from admin_tools.dashboard import modules, Dashboard
 
         class MyDashboard(Dashboard):
@@ -205,10 +205,10 @@ class Group(DashboardModule):
         self.template = kwargs.get('template',
                                    'admin_tools/dashboard/modules/group.html')
         self.display = kwargs.get('display', 'tabs')
-        
+
     def init_with_context(self, context):
         for module in self.children:
-            # to simplify the whole stuff, modules have some limitations, 
+            # to simplify the whole stuff, modules have some limitations,
             # they cannot be dragged, collapsed or closed
             module.collapsible = False
             module.draggable = False
