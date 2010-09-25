@@ -5,7 +5,7 @@ Quick start guide
 
 Before installing django-admin-tools, you'll need to have a copy of
 `Django <http://www.djangoproject.com>`_ already installed. For the
-|version| release, Django 1.1 or newer is required.
+|version| release, Django 1.2 or higher and `grappelli 2.1 <http://code.google.com/p/django-grappelli/>`_ or higher.
 
 
 Installing django-admin-tools
